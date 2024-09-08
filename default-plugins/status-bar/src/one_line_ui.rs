@@ -616,26 +616,29 @@ fn render_common_modifiers(
     line_part_to_render: &mut LinePart,
     separator: &str,
 ) {
-    let prefix_text = if mode_info.capabilities.arrow_fonts {
-        // Add extra space in simplified ui
-        format!(
-            " {} + ",
-            common_modifiers
-                .iter()
-                .map(|m| m.to_string())
-                .collect::<Vec<_>>()
-                .join("-")
-        )
-    } else {
-        format!(
-            " {} +",
-            common_modifiers
-                .iter()
-                .map(|m| m.to_string())
-                .collect::<Vec<_>>()
-                .join("-")
-        )
-    };
+    let prefix_text = palette
+        .superkey_prefix
+        .paint(if mode_info.capabilities.arrow_fonts {
+            // Add extra space in simplified ui
+            format!(
+                " {} + ",
+                common_modifiers
+                    .iter()
+                    .map(|m| m.to_string())
+                    .collect::<Vec<_>>()
+                    .join("-")
+            )
+        } else {
+            format!(
+                " {} +",
+                common_modifiers
+                    .iter()
+                    .map(|m| m.to_string())
+                    .collect::<Vec<_>>()
+                    .join("-")
+            )
+        })
+        .to_string();
 
     let suffix_separator = palette.superkey_suffix_separator.paint(separator);
     line_part_to_render.part = format!(
